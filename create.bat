@@ -19,6 +19,10 @@ IF EXIST %file_name% (
 ) ELSE (
     mkdir %file_name%
     cd %file_name%
-    echo. > %file_name%.cpp
+    IF EXIST %file_name%.cpp (
+        echo %file_name%.cpp already exists
+    ) ELSE (
+        echo. > %file_name%.cpp
+    )
 )
 
