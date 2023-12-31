@@ -3,10 +3,13 @@ using namespace std;
 
 typedef long long ll;
 /* 
-辅助栈，只要存小于等于之前（辅助栈栈顶）的元素，栈底为 INT_MAX
+设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+
+方法一：辅助栈
+只要存小于等于之前（辅助栈栈顶）的元素，栈底为 INT_MAX
 另一种辅助栈，pair<int,int>
 
-不用辅助栈，存差值
+方法二：不用辅助栈，存差值
 stack<int> stk;
 min_val = -1;
 
