@@ -39,6 +39,9 @@ for (int i = 1; i < n; i++) {
 此时 dp[:] 是有序的，
 如果 dp[len] < nums[i]，则更新 dp[++len] （len 初始化为 1）
 否则在 dp[1...len] 中找到一个 dp[i - 1] < nums[j] < dp[i]
+
+lower_bound 第一个大于等于 k 的位置
+upper_bound 第一个大于 k 的位置
  */
 class Solution {
  public:
