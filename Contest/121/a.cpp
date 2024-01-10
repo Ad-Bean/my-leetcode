@@ -3,7 +3,19 @@ using namespace std;
 
 typedef long long ll;
 typedef pair<int, int> pii;
+/* 
+给你一个下标从 0 开始的整数数组 nums 。
 
+如果一个前缀 nums[0..i] 满足对于 1 <= j <= i 的所有元素都有 nums[j] = nums[j - 1] + 1 ，
+那么我们称这个前缀是一个 顺序前缀 。特殊情况是，只包含 nums[0] 的前缀也是一个 顺序前缀 。
+
+请你返回 nums 中没有出现过的 最小 整数 x ，满足 x 大于等于 最长 顺序前缀的和。
+
+方法一：集合/哈希
+1. 求最长连续递增前缀元素和 sum
+2. set / map
+3. 遍历 set， while sum in st: sum += 1  O(n) 
+ */
 class Solution {
  public:
   int missingInteger(vector<int>& nums) {
