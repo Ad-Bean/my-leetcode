@@ -26,7 +26,9 @@ s 中可能会有一些 额外的字符 不在任何子字符串中。
 
 dp[i] 表示 s[:i-1] 的子问题
 dp[i] = dp[i-1] + 1, 如果 s[i-1] 是额外字符
-dp[i] = min(dp[j]) 如果 s[j:i-1] 存在于 dictionary 中
+dp[i] = min(dp[j]) j \in [0, i-1] 如果 s[j:i-1] 存在于 dictionary 中
+
+方法二：字典树优化
  */
 class Solution {
  public:
