@@ -25,25 +25,32 @@ struct TreeNode {
 并非所有祖先节点都需要被考虑到，我们只需要获取最小的祖先节点以及最大的祖先节点。
 深度优先搜索，并且记录搜索路径上的节点的最小值 lo 与最大值 hi
 假设当前搜索的节点值为 val，那么与该子孙节点与它的所有祖先节点的绝对差值最大值为 
-max(abs(val - lo), abs(val - hi))
+
+
+对于一条从根出发向下的路径，我们要计算的实际上是这条路径上任意两点的最大差值。
+递归到叶子时，mx是从根到叶子的路径上的最大值，mn 是从根到叶子的路径上的最小值，所以 mx−mn 就是从根到叶子的路径上任意两点的最大差值。
 
 
  */
 class Solution {
-  int dfs(TreeNode* node, int lo, int hi) {
+  int ans = 0;
+
+  void dfs(TreeNode* node, int lo, int hi) {
     if (!node) {
-      return 0;
+      ans = max(ans, hi - lo);
+      return;
     }
-    int dif = max(abs(node->val - lo), abs(node->val - hi));
     lo = min(lo, node->val);
     hi = max(hi, node->val);
-    dif = max(dif, dfs(node->left, lo, hi));
-    dif = max(dif, dfs(node->right, lo, hi));
-    return dif;
+    dfs(node->left, lo, hi);
+    dfs(node->right, lo, hi);
   }
 
  public:
-  int maxAncestorDiff(TreeNode* root) { return dfs(root, root->val, root->val); }
+  int maxAncestorDiff(TreeNode* root) {
+    dfs(root, root->val, root->val);
+    return ans;
+  }
 };
 int main() {
 
