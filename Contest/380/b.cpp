@@ -17,11 +17,18 @@ s[j..(j + b.length - 1)] == b
 |j - i| <= k
 以数组形式按 从小到大排序 返回美丽下标。
 
-方法一：二分
+
 1 <= k <= s.length <= 1e5
-方法二：KMP
-在文本 text 中找到模式串 pattern 返回所有匹配的位置开头
+方法一：二分 + 滑动窗口 
+substr 求出 a 在 s 中所有位置 aa 
+substr 求出 b 在 s 中所有位置 bb 
+此时 时间复杂度是 On^2
+遍历 aa 中的下标 i，在 bb 中二分查找距离 i 最近的 j，如果 abs(i - j) <= k 则记录答案
+
 1 <= k <= s.length <= 5e5
+方法二：KMP + 二分 / 滑窗
+时间复杂度 Onlgn / On
+在文本 text 中找到模式串 pattern 返回所有匹配的位置开头
  */
 class Solution {
  public:
