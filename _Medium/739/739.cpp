@@ -36,6 +36,7 @@ class Solution {
     stack<pair<int, int>> stk;
     vector<int> ans(n);
     for (int i = n - 1; i >= 0; i--) {
+      // 从后向前，维护单调栈 单调递减，所以栈顶弹出 比当前小的
       while (!stk.empty() && stk.top().first <= temperatures[i]) {
         stk.pop();
       }
