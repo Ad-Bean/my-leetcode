@@ -14,10 +14,19 @@ struct TreeNode {
   TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 /* 
+给你一棵二叉树的根节点，返回该树的 直径 。
+
+二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
+
+两节点之间路径的 长度 由它们之间边数表示。
+
+
+方法一：dfs
+由于是二叉树，从根节点开始左右最深的路径之和就是直径
 
 当前最大直径是 dfs(node->left) + dfs(node->right) + 1 
 
-当前贡献是 max(dfs(node->left), dfs(node->right)) + 1
+最深的路径是 max(dfs(node->left), dfs(node->right)) + 1
  */
 class Solution {
  public:
