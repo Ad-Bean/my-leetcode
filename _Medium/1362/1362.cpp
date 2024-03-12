@@ -20,36 +20,55 @@ typedef pair<int,int> pii;
 输入：num = 999
 输出：[40,25]
 
-方法一：
+方法一：贪心 + 枚举
 首先为了使得 x * y = num + 1 或 num + 2，并且两数接近
 sqrt(num + 1) 然后对两个数进行枚举
 比如 num = 999，i = sqrt(num + 1) = 31，如果 num+1 % i == 0 并且 abs(i - n/i) 小于当前答案则更新
 同样对于 sqrt(num + 2) 进行枚举
+
+贪心写法：从 sqrt(num) + 1 开始枚举，因为越大的数，两数的差越小
+时间复杂度 O(sqrt(n))
  */
 
 class Solution {
 public:
     vector<int> closestDivisors(int num) {
         vector<int> ans {0, INT_MAX};
-        for (int i = sqrt(num + 1); i > 0; i--) {
+        for (int i = sqrt(num) + 1; i > 0; i--) {
             if ((num + 1) % i == 0) {
-                if (abs((num + 1) / i - i) < abs(ans[1] - ans[0])) {
-                    ans[0] = i;
-                    ans[1] = (num + 1) / i;
-                }
+                return {i, (num+1) / i};
             }
-        }
-        for (int i = sqrt(num + 2); i > 0; i--) {
             if ((num + 2) % i == 0) {
-                if (abs((num + 2) / i - i) < abs(ans[1] - ans[0])) {
-                    ans[0] = i;
-                    ans[1] = (num + 2) / i;
-                }
+                return {i, (num+2) / i};
             }
         }
         return ans;
      }
 };
+
+// class Solution {
+// public:
+//     vector<int> closestDivisors(int num) {
+//         vector<int> ans {0, INT_MAX};
+//         for (int i = sqrt(num + 1); i > 0; i--) {
+//             if ((num + 1) % i == 0) {
+//                 if (abs((num + 1) / i - i) < abs(ans[1] - ans[0])) {
+//                     ans[0] = i;
+//                     ans[1] = (num + 1) / i;
+//                 }
+//             }
+//         }
+//         for (int i = sqrt(num + 2); i > 0; i--) {
+//             if ((num + 2) % i == 0) {
+//                 if (abs((num + 2) / i - i) < abs(ans[1] - ans[0])) {
+//                     ans[0] = i;
+//                     ans[1] = (num + 2) / i;
+//                 }
+//             }
+//         }
+//         return ans;
+//      }
+// };
 int main() {
     
     Solution test;
