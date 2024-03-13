@@ -23,6 +23,11 @@ typedef pair<int, int> pii;
 剩下的 1 则在前面
 中间的全是 0
 
+简介写法：
+int cnt1 = ranges::count(s, '1');
+return string(cnt1 - 1, '1') + string(s.length() - cnt1, '0') + '1';
+
+
  */
 class Solution {
  public:
