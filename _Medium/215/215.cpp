@@ -26,18 +26,22 @@
  * 
  * 
  * 方法一：排序 Ologn
+ * 排序后返回 nums[n - k]
  * 
  * 方法二：堆排序 Ologn
+ * 每次取出最大的元素，取 k 次
  * 
- * 方法三：快排 On
- * 分治：先分解 a[l:r] 成两部分 a[l:q-1] a[q+1:r] 前者全部小于 a[q] 后者全部大于
- * 递归：继续分解
- * 合并：使 a[l..r] 有序
+ * 方法三：快速选择 On
+ * 随机选择一个 pivot，将数组分为两部分 a[l:i] a[j:r] 
+ * 前者每个元素小于等于 pivot 后者每个元素大于 pivot
+ * 如果此时 n - k <= j，由于 n - k 表示第 k 大（升序数组的下标），表示第 k 大在前面部分，
+ * 继续递归解决 quickSelect(nums, l, j, n - k)
+ * 否则在后部分，quickSelect(nums, j + 1, r, n - k)
  * 
- * 只要某次划分的 q 为 倒数第 k 个下标 的时候，就是第 k 大
- * 
- * 分解时：如果 a[q] 比目标小
- * 
+ * 细节：
+ * pivot 直接选择 l，随机不知道为什么会出错
+ * i 和 j 的初始值为 l - 1 和 r + 1，且 while 先 --j 和 ++i
+ * 是为了防止 nums 中有相等的元素，最终导致 i != j 死循环
  * 
  */
 #include <bits/stdc++.h>
@@ -47,35 +51,37 @@ typedef long long ll;
 typedef pair<int, int> pii;
 // @lc code=start
 class Solution {
-  int quickselect(vector<int>& nums, int k) {
-    int pivot = nums[rand() % nums.size()];
-    vector<int> l, m, r;
-    for (const int num : nums) {
-      if (num < pivot) {
-        l.emplace_back(num);
-      } else if (num > pivot) {
-        r.emplace_back(num);
-      } else {
-        m.emplace_back(num);
-      }
-    }
-    // kth largest in the r
-    if (k <= r.size()) {
-      return quickselect(r, k);
-    }
-    // kth largest in l, recursive
-    if (k > m.size() + r.size()) {
-      return quickselect(l, k - (r.size() + m.size()));
-    }
-    // kth largest in m, return pivot
-    return pivot;
-  }
-
  public:
   int findKthLargest(vector<int>& nums, int k) {
     int n = nums.size();
-    srand(time(NULL));
-    return quickselect(nums, k);
+    function<int(int, int)> quickSelect = [&](int l, int r) {
+      if (l == r) {
+        return nums[n - k];
+      }
+      int pivot = l;
+      int i = l - 1, j = r + 1;
+      while (i < j) {
+        while (nums[pivot] < nums[--j]) {}
+        while (nums[pivot] > nums[++i]) {}
+        if (i < j) {
+          swap(nums[i], nums[j]);
+        }
+      }
+      if (n - k <= j) {
+        return quickSelect(l, j);  // n - k 第 k 大在前面
+      } else {
+        return quickSelect(j + 1, r);
+      }
+    };
+    return quickSelect(0, n - 1);
   }
 };
 // @lc code=end
+
+int main() {
+  Solution test;
+  // vector<int> nums = {3, 2, 1, 5, 6, 4};
+  // cout << test.findKthLargest(nums, 2) << endl;
+  vector<int> nums2 = {3, 2, 3, 1, 2, 4, 5, 5, 6};
+  cout << test.findKthLargest(nums2, 4) << endl;
+}
